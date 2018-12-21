@@ -59,7 +59,7 @@ from jinja2 import Environment, FileSystemLoader
 hooks = Hooks()
 package_list=["haproxy"]
 
-@hooks.hook('install')
+@hooks.hook('install.real')
 def install():
     status_set("maintenance", "Installing apt packages...")
     execd_preinstall()
