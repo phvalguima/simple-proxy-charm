@@ -2,7 +2,6 @@
 
 from charmhelpers.core.hookenv import (
     Hooks,
-    UnregisteredHookError,
     config,
     log,
     DEBUG,
@@ -13,8 +12,6 @@ from charmhelpers.core.hookenv import (
     relation_set,
     related_units,
     status_set,
-    open_port,
-    is_leader,
     relation_id,
 )
 
@@ -37,7 +34,7 @@ from charmhelpers.core.host import (
 )
 
 hooks = Hooks()
-package_list=["haproxy","python-jinja2"]
+package_list=["haproxy"]
 
 @hooks.hook('install')
 def install():
