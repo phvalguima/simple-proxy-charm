@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from charmhelpers.core.hookenv import (
     Hooks,
     UnregisteredHookError,
@@ -81,9 +83,9 @@ def config_proxy():
     ports=config_get("proxy_port").split(",")
     port_ints=convert_ports_config()
 
-    file_loader = FileSystemLoader(‘templates’)
+    file_loader = FileSystemLoader("templates")
     env = Environment(loader=file_loader)
-    fe_part = env.get_template(‘fe_part.tmpl’)
+    fe_part = env.get_template("fe_part.tmpl")
 
     with open("/etc/haproxy/haproxy.cfg","w") as f:
         cfg=[]
