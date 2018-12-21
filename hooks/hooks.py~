@@ -1,0 +1,3 @@
+from charmhelpers.contrib.openstack.ha.utils import (
+    generate_ha_relation_data,
+)

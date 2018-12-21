@@ -1,0 +1,24 @@
+name: simple-proxy-charm
+summary: A charm for a simple proxy based on HAProxy and CRM tools
+maintainer: OpenStack Charmers <openstack-charmers@lists.ubuntu.com>
+description: |
+ A charm for a simple proxy based on HAProxy and CRM tools
+tags:
+  - proxy
+  - loadbalancing
+  - misc
+series:
+  - xenial
+  - bionic
+  - cosmic
+extra-bindings:
+  frontend:
+  backend:
+  admin-network:
+requires:
+  ha:
+    interface: hacluster
+    scope: container
+peers:
+  cluster:
+    interface: keystone-ha

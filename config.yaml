@@ -1,0 +1,57 @@
+options:
+  mode:
+    type: string
+    default: ""
+    description: |
+      Two operation modes: balancer, proxy
+      balancer means haproxy is used as a haproxy (to be done yet...)
+      proxy (default) is used to proxy ports: each new service maps to a proxy_port
+  proxy_port:
+    type: string
+    default: "35000:45000"
+    description: |
+      List of ports from which haproxys port is pulled. Ports are pulled sequentially
+      Does not matter order, syntax: "100,200,300:400,500" means any port from
+      300 to 400 maybe chosen
+  balancer_port:
+    type: string
+    default: ""
+    description: |
+      List of ports to set the balancer. Values are taken sequentially.
+  backend_list:
+    type: string
+    default: ""
+    description: |
+      List of backends on format: "1.2.3.4:80,blabla.com:443,test.com"
+
+  vip:
+    type: string
+    default:
+    description: |
+      Virtual IP(s) to use to front API services in HA configuration.
+      .
+      If multiple networks are being used, a VIP should be provided for each
+      network, separated by spaces.
+  vip_iface:
+    type: string
+    default: eth0
+    description: |
+      Default network interface to use for HA vip when it cannot be
+      automatically determined.
+  vip_cidr:
+    type: int
+    default: 24
+    description: |
+      Default CIDR netmask to use for HA vip when it cannot be automatically
+  ha-bindiface:
+    type: string
+    default: eth0
+    description: |
+      Default network interface on which HA cluster will bind to communication
+      with the other members of the HA Cluster.
+  ha-mcastport:
+    type: int
+    default: 5434
+    description: |
+      Default multicast port number that will be used to communicate between
+      HA Cluster nodes.

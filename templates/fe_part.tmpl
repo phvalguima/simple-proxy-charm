@@ -1,0 +1,10 @@
+frontend {{ service_name }}
+    bind    *:{{ bind_port }}
+    retries 3
+    default_backend {{ service_name }}
+
+backend {{ service_name }}
+    timeout server 900s
+    balance source
+    hash-type consistent
+    server {{ service_name }} {{ backend }} check
