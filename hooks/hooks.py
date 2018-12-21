@@ -1,5 +1,25 @@
 #!/usr/bin/env python3
 
+import hashlib
+import json
+import os
+import sys
+
+_path = os.path.dirname(os.path.realpath(__file__))
+_root = os.path.abspath(os.path.join(_path, '..'))
+
+
+def _add_path(path):
+    if path not in sys.path:
+        sys.path.insert(1, path)
+
+
+_add_path(_root)
+
+from subprocess import check_call
+
+from charmhelpers.core import unitdata
+
 from charmhelpers.core.hookenv import (
     Hooks,
     config,
@@ -15,6 +35,15 @@ from charmhelpers.core.hookenv import (
     relation_id,
 )
 
+from charmhelpers.core.host import (
+    service_pause,
+    service_stop,
+    service_start,
+    service_restart,
+)
+
+from charmhelpers.payload.execd import execd_preinstall
+
 from charmhelpers.fetch import (
     apt_install, apt_update,
     filter_installed_packages
@@ -26,12 +55,6 @@ from charmhelpers.contrib.openstack.ha.utils import (
 
 from jinja2 import Environment, FileSystemLoader
 
-from charmhelpers.core.host import (
-    service_pause,
-    service_stop,
-    service_start,
-    service_restart,
-)
 
 hooks = Hooks()
 package_list=["haproxy"]
@@ -39,6 +62,7 @@ package_list=["haproxy"]
 @hooks.hook('install')
 def install():
     status_set("maintenance", "Installing apt packages...")
+    execd_preinstall()
     apt_update()
     apt_install(package_list, fatal=True)
     config_changed()
