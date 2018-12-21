@@ -66,7 +66,7 @@ def config_changed():
 def config_balancer():
     return
 
-def config_proxy():
+def convert_ports_config():
     ports=config_get("proxy_port").split(",")
     port_ints=[]
     for p in ports:
@@ -74,12 +74,17 @@ def config_proxy():
             port_ints.extend(range(int(p.split(":")[0]),int(p.split(":")[-1])))
         else:
             port_ints.append(int(p))
-    port_ints.sort()
+    return port_ints.sort()
+
+
+def config_proxy():
+    ports=config_get("proxy_port").split(",")
+    port_ints=convert_ports_config()
 
     file_loader = FileSystemLoader(‘templates’)
     env = Environment(loader=file_loader)
     fe_part = env.get_template(‘fe_part.tmpl’)
-    
+
     with open("/etc/haproxy/haproxy.cfg","w") as f:
         cfg=[]
         for b in config_get("backend_list").split(","):
@@ -90,7 +95,7 @@ def config_proxy():
         f.close()
 
     service_restart("haproxy")
-                
+
 
 @hooks.hook('ha-relation-joined')
 def ha_joined(relation_id=None):
