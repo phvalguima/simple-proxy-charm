@@ -11,6 +11,8 @@ check_and_install() {
     fi
 }
 
+apt-get update -y
+
 PYTHON="python3"
 
 for dep in ${DEPS[@]}; do
