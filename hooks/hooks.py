@@ -98,7 +98,7 @@ def convert_ports_config():
     port_ints=[]
     for p in ports:
         if ":" in p:
-            port_ints.extend(range(int(p.split(":")[0]),int(p.split(":")[-1])))
+            port_ints.extend(range(int(p.split(":")[0]),int(p.split(":")[-1])+1))
         else:
             port_ints.append(int(p))
     port_ints.sort()
